@@ -1,0 +1,61 @@
+\begin{thebibliography}{10}
+
+\bibitem{yek}
+Alec Radford, Luke Metz, and Soumith Chintala.
+\newblock Unsupervised representation learning with deep convolutional
+  generative adversarial networks.
+\newblock {\em arXiv preprint arXiv:1511.06434}, 2015.
+
+\bibitem{do}
+Alexei~A Efros and Thomas~K Leung.
+\newblock Texture synthesis by non-parametric sampling.
+\newblock In {\em Computer Vision, 1999. The Proceedings of the Seventh IEEE
+  International Conference on}, volume~2, pages 1033--1038. IEEE, 1999.
+
+\bibitem{seh}
+William~T Freeman, Thouis~R Jones, and Egon~C Pasztor.
+\newblock Example-based super-resolution.
+\newblock {\em IEEE Computer graphics and Applications}, 22(2):56--65, 2002.
+
+\bibitem{chahar}
+James Hays and Alexei~A Efros.
+\newblock Scene completion using millions of photographs.
+\newblock {\em Communications of the ACM}, 51(10):87--94, 2008.
+
+\bibitem{panj}
+Javier Portilla and Eero~P Simoncelli.
+\newblock A parametric texture model based on joint statistics of complex
+  wavelet coefficients.
+\newblock {\em International journal of computer vision}, 40(1):49--70, 2000.
+
+\bibitem{shish}
+Karol Gregor, Ivo Danihelka, Alex Graves, Danilo~Jimenez Rezende, and Daan
+  Wierstra.
+\newblock Draw: A recurrent neural network for image generation.
+\newblock {\em arXiv preprint arXiv:1502.04623}, 2015.
+
+\bibitem{haft}
+Alexey Dosovitskiy, Jost Tobias~Springenberg, and Thomas Brox.
+\newblock Learning to generate chairs with convolutional neural networks.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 1538--1546, 2015.
+
+\bibitem{hasht}
+Jascha Sohl-Dickstein, Eric~A Weiss, Niru Maheswaranathan, and Surya Ganguli.
+\newblock Deep unsupervised learning using nonequilibrium thermodynamics.
+\newblock {\em arXiv preprint arXiv:1503.03585}, 2015.
+
+\bibitem{noh}
+Diederik~P Kingma and Max Welling.
+\newblock Auto-encoding variational bayes.
+\newblock {\em arXiv preprint arXiv:1312.6114}, 2013.
+
+\bibitem{celeb}
+http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html.
+\newblock Celebrity face dataset.
+
+\bibitem{skyline}
+http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html.
+\newblock New york skyline video.
+
+\end{thebibliography}

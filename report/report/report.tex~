@@ -1,0 +1,140 @@
+\documentclass{article} % For LaTeX2e
+\usepackage{nips15submit_e,times}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{calrsfs}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\DeclareMathAlphabet{\pazocal}{OMS}{zplm}{m}{n}
+\newcommand{\La}{\mathcal{N}}
+\newcommand{\Lb}{\pazocal{N}}
+%\documentstyle[nips14submit_09,times,art10]{article} % For LaTeX 2.09
+
+
+\title{Formatting Instructions for NIPS 2015}
+
+
+\author{
+David S.~Hippocampus\thanks{ Use footnote for providing further information
+about author (webpage, alternative address)---\emph{not} for acknowledging
+funding agencies.} \\
+Department of Computer Science\\
+Cranberry-Lemon University\\
+Pittsburgh, PA 15213 \\
+\texttt{hippo@cs.cranberry-lemon.edu} \\
+\And
+Coauthor \\
+Affiliation \\
+Address \\
+\texttt{email} \\
+\AND
+Coauthor \\
+Affiliation \\
+Address \\
+\texttt{email} \\
+\And
+Coauthor \\
+Affiliation \\
+Address \\
+\texttt{email} \\
+\And
+Coauthor \\
+Affiliation \\
+Address \\
+\texttt{email} \\
+(if needed)\\
+}
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to \LaTeX{} to determine where to break
+% the lines. Using \AND forces a linebreak at that point. So, if \LaTeX{}
+% puts 3 of 4 authors names on the first line, and the last on the second
+% line, try using \AND instead of \And before the third author name.
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+%\nipsfinalcopy % Uncomment for camera-ready version
+
+\begin{document}
+
+
+\maketitle
+
+\begin{abstract}
+The abstract paragraph should be indented 1/2~inch (3~picas) on both left and
+right-hand margins. Use 10~point type, with a vertical spacing of 11~points.
+The word \textbf{Abstract} must be centered, bold, and in point size 12. Two
+line spaces precede the abstract. The abstract must be limited to one
+paragraph.
+\end{abstract}
+
+\section{Submission of papers to NIPS 2015}
+
+NIPS requires electronic submissions.  The electronic submission site is  
+\begin{center}
+   \url{http://papers.nips.cc}
+\end{center}
+
+Please read carefully the
+instructions below, and follow them faithfully.
+\subsection{Variational auto encoder(VAE)}
+Variational Autoencoder is one of methods that we used to generate new data from our given data. To explain this method in a proper way we will start from describing a very simple network and then we make it more elaborated. \\
+We can see nural networks as a general function that aims to produce a desired output given any kind of input. So, in our application we can think of input as a vector of ones that is feeded into a nueral network and the output is the desired image. \\
+\begin{figure}[h]
+\centering
+\includegraphics[width=15cm]{input1.png}
+\end{figure}
+That was one view to the problem of generating new desired images. One generalization of this view is to let input data to be any one-hot vector( A vector with one in one position and 0 in the rest). Now, we can encode different kind of data with different input vectors( For example show dog with [1, 0, 0] and cat with [0, 1, 0]). To be able to encode more image with vectors of size n, we can let the vecotr entries to be any positve real values less than one. We call this input variable our latent variable. \\
+Till now, we have assumed that we know our latent variable already. But one problem is to find out which picture is corresponding to which latent variable. To assign a latent variable to a picture, we use an encoder. Thus after encoding an image to a latent variable with limited size, we can feed the latent variable to a decoder and get the main image.\\
+\begin{figure}[h]
+\centering
+\includegraphics[width=15cm]{auto-encoder.png}
+\end{figure}
+That is the idea of an plain auto encoder. With this structure we can decode images to a feature set and then extract them main image from the feature set. In that schema, we are not generating new images. This is the place that variational auto encoder comes in. 
+The idea is to use variational inference. In varational inference schema, instead of computing posterior distribution over the latent variable, we assume that latent variable is from a specific probability distribution function like $q_{\phi}(z)$ in which z is our latent variable and $\phi$ is the varitional parameter of the distribution that we can change through optimization. From this prior distribution and with the assumption that the posterior distribution $q_{\phi}(z|x)$ is a gaussian, we can approximate this  distribution. To do that, we set the $q_{\phi}(z|x)$ to be the out put of encoder part.
+Thus, the logarithm of posterior distribution function is:\\
+\begin{equation}
+log\ q_{\phi}(z|x^{(i)}) = log \Lb(z; \mu^{(i)}, \sigma^{2(i)}I)
+\end{equation}
+Now to measure how how much our approximation is close to the real answer, we need to compute two things: 1- The latent loss and 2- the generation loss. The first term in computing error is do the difference between the distribution of $q_{\phi}(z|x)$ and $q_{\phi}(z)$ which we aim to minimize it( It works like a regulizer) and we can comput it with KL-divergence.  The second term is due to the different between our generated image and the main image. As we see the first term try to prevent the output to be very close to input and instead try to minimize the differenc between $q_{\phi}(z|x)$ and $q_{\phi}(z)$(which is a unit gaussian). \\
+Now, the question is how to compute the different between our generated image and the main image while we havn't generated image yet. The answer is to sample the z from the posterior distribution function $q_{\phi}(z|x)$. To do this sampling we need a reparametrization. Assuming $z \sim q_{\phi}(z|x)$ we will have 
+\begin{equation}
+z = \mu + \sigma^2 \times \epsilon,\ \epsilon \sim \Lb(0, I)
+\end{equation}
+It means that to sample z from the mean vector and variance vector, we just need to sample $\epsilon$ from a unit guassian distribution. After sampling this function we can compute a mean squared error for the generation loss term. \\
+\section{Experiments}
+We tested our implementation of VAE and GAN on multifarious datasets. The most interesting datasets were Celebrity Face Dataset (CFD) \cite{celeb} and New York Skyline Dataset (NYSD) \cite{skyline}. CFD contained colored images of size 64X64, with training set size 9000 and test set size 1000. NYSD was created using frames of a video, partitioned into 1200 training images and 125 test images, each of size $64 \times 64$.
+
+
+\subsubsection*{References}
+\begin{thebibliography}{9}
+
+\small{
+\bibitem{celeb} 
+Celebrity Face Dataset - http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html
+\bibitem{skyline}
+New York Skyline Video - https://www.youtube.com/watch?v=DDo73Njxdqc
+
+ 
+
+[1] Alexander, J.A. \& Mozer, M.C. (1995) Template-based algorithms
+for connectionist rule extraction. In G. Tesauro, D. S. Touretzky
+and T.K. Leen (eds.), {\it Advances in Neural Information Processing
+Systems 7}, pp. 609-616. Cambridge, MA: MIT Press.
+
+[2] Bower, J.M. \& Beeman, D. (1995) {\it The Book of GENESIS: Exploring
+Realistic Neural Models with the GEneral NEural SImulation System.}
+New York: TELOS/Springer-Verlag.
+
+[3] Hasselmo, M.E., Schnell, E. \& Barkai, E. (1995) Dynamics of learning
+and recall at excitatory recurrent synapses and cholinergic modulation
+in rat hippocampal region CA3. {\it Journal of Neuroscience}
+{\bf 15}(7):5249-5262.
+}
+\end{thebibliography}
+
+
+\end{document}
